@@ -20,6 +20,8 @@
         <java.version>17</java.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
         <swagger.version>3.0.0</swagger.version>
+        <aws.version>1.12.328</aws.version>
+        <gcp.version>2.13.1</gcp.version>
     </properties>
 
     <dependencies>
@@ -69,6 +71,18 @@
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
             <version>${mapstruct.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>${aws.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-storage -->
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-storage</artifactId>
+            <version>${gcp.version}</version>
         </dependency>
 
         <!-- Runtime -->
