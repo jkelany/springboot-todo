@@ -1,5 +1,6 @@
 package com.jkelany.todo.api.cdm.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Schema(name = "User Schema")
 public class UserDTO {
     private String id;
     @NotEmpty

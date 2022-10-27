@@ -7,6 +7,8 @@ import com.jkelany.todo.api.cdm.response.PageResponse;
 import com.jkelany.todo.api.exception.NotFoundException;
 import com.jkelany.todo.api.exception.UnauthorizedException;
 import com.jkelany.todo.api.service.TodoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "Todo")
 @RestController
 @RequestMapping(path = "/todo")
 @CrossOrigin
@@ -30,6 +33,7 @@ public class TodoController extends BaseController {
     @Autowired
     private TodoMapper todoMapper;
 
+    @Operation(summary = "Get Todo by Id")
     @GetMapping(path = "/{id}")
     public ResponseEntity<TodoDTO> get(@PathVariable String id) throws NotFoundException, UnauthorizedException {
         Todo todo = todoService.get(id);
@@ -40,6 +44,7 @@ public class TodoController extends BaseController {
         return ResponseEntity.ok(todoMapper.toDto(todo));
     }
 
+    @Operation(summary = "Get all Todos with pagination option")
     @GetMapping
     public ResponseEntity<PageResponse> getAll(Pageable pageable) {
         Page<TodoDTO> todoDtoPage = todoService.getAll(authService.getCurrentUser().getId(), pageable)
@@ -47,6 +52,7 @@ public class TodoController extends BaseController {
         return ResponseEntity.ok(toPageResponse(todoDtoPage));
     }
 
+    @Operation(summary = "Create new Todo")
     @PostMapping
     public ResponseEntity<TodoDTO> create(@Valid @RequestBody TodoDTO todoDTO) {
         Todo todo = todoMapper.fromDto(todoDTO);
@@ -54,6 +60,7 @@ public class TodoController extends BaseController {
         return new ResponseEntity<>(todoMapper.toDto(todoService.insert(todo)), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Update current Todo")
     @PutMapping
     public ResponseEntity<TodoDTO> update(@Valid @RequestBody TodoDTO todoDTO) {
         Todo todo = todoMapper.fromDto(todoDTO);
@@ -61,6 +68,7 @@ public class TodoController extends BaseController {
     }
 
 
+    @Operation(summary = "Delete Todo by Id")
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable String id) throws NotFoundException, UnauthorizedException {
         Todo todo = todoService.get(id);

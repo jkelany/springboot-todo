@@ -1,5 +1,8 @@
 package com.jkelany.todo.api.cdm.request;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Schema(name = "Login Schema")
 public class LoginRequest {
 
     @NotNull(message = "Username should not be null")

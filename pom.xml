@@ -19,7 +19,7 @@
     <properties>
         <java.version>17</java.version>
         <mapstruct.version>1.5.2.Final</mapstruct.version>
-        <swagger.version>3.0.0</swagger.version>
+        <openapi3.version>1.6.12</openapi3.version>
         <aws.version>1.12.328</aws.version>
         <gcp.version>2.13.1</gcp.version>
     </properties>
@@ -83,6 +83,12 @@
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-storage</artifactId>
             <version>${gcp.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>${openapi3.version}</version>
         </dependency>
 
         <!-- Runtime -->

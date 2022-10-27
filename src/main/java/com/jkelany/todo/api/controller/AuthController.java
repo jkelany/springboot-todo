@@ -4,6 +4,10 @@ import com.jkelany.todo.api.cdm.request.LoginRequest;
 import com.jkelany.todo.api.cdm.response.JwtResponse;
 import com.jkelany.todo.api.service.TokenService;
 import com.jkelany.todo.api.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Tag(name = "Auth")
 @RestController
 @RequestMapping(path = "/auth")
 @CrossOrigin
@@ -32,6 +37,11 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping
+    @Operation(summary = "Login with username and password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authorized"),
+            @ApiResponse(responseCode = "401", description = "Unauthorized invalid username or password"),
+    })
     public ResponseEntity<JwtResponse> login(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));

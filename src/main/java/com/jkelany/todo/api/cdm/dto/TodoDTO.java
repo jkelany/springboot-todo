@@ -1,6 +1,7 @@
 package com.jkelany.todo.api.cdm.dto;
 
 import com.jkelany.todo.api.validator.IpAddress;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
+@Schema(name = "Todo Schema")
 public class TodoDTO {
     private String id;
 
