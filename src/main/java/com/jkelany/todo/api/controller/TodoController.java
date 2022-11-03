@@ -46,7 +46,7 @@ public class TodoController extends BaseController {
 
     @Operation(summary = "Get all Todos with pagination option")
     @GetMapping
-    public ResponseEntity<PageResponse> getAll(Pageable pageable) {
+    public ResponseEntity<PageResponse<?>> getAll(Pageable pageable) {
         Page<TodoDTO> todoDtoPage = todoService.getAll(authService.getCurrentUser().getId(), pageable)
                 .map(todoMapper::toDto);
         return ResponseEntity.ok(toPageResponse(todoDtoPage));
@@ -63,7 +63,14 @@ public class TodoController extends BaseController {
     @Operation(summary = "Update current Todo")
     @PutMapping
     public ResponseEntity<TodoDTO> update(@Valid @RequestBody TodoDTO todoDTO) {
-        Todo todo = todoMapper.fromDto(todoDTO);
+        Todo todo = todoService.get(todoDTO.getId());
+        if (todo.getUserId() == null || !todo.getUserId().equals(authService.getCurrentUser().getId())) {
+            throw new UnauthorizedException(messageSource.getMessage("exception.unauthorized_exception.message",
+                    null, LocaleContextHolder.getLocale()));
+        }
+
+        todo = todoMapper.fromDto(todoDTO);
+        todo.setUserId(authService.getCurrentUser().getId());
         return ResponseEntity.ok(todoMapper.toDto(todoService.update(todo)));
     }
 

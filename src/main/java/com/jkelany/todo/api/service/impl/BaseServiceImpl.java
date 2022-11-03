@@ -22,7 +22,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID> implements B
     @Override
     public T get(ID id) throws NotFoundException {
         Optional<T> entityOptional = baseRepository.findById(id);
-        if (!entityOptional.isPresent()) {
+        if (entityOptional.isEmpty()) {
             throw new NotFoundException(
                     messageSource.getMessage("exception.not_found_exception.message",
                             null, LocaleContextHolder.getLocale()));
@@ -42,12 +42,12 @@ public abstract class BaseServiceImpl<T extends BaseEntity<ID>, ID> implements B
 
     @Override
     public T update(T item) {
-        return baseRepository.insert(item);
+        return baseRepository.save(item);
     }
 
     @Override
     public void delete(ID id) throws NotFoundException {
-        if (!baseRepository.findById(id).isPresent()) {
+        if (baseRepository.findById(id).isEmpty()) {
             throw new NotFoundException(
                     messageSource.getMessage("exception.not_found_exception.message",
                             null, LocaleContextHolder.getLocale()));
